@@ -1,22 +1,26 @@
-import React, { useEffect, useState } from 'react';
-
-import { apiUrl } from '../config';
-import User from './user_index_item';
+import React, { useEffect } from 'react';
+import { fetchAllUsers } from '../actions/user_actions';
+import UserIndexItem from './user_index_item';
+import { useDispatch, useSelector } from 'react-redux';
 
 function UsersList (props) {
-  const [users, setUsers] = useState([]);
+  const users = useSelector( state => Object.values(state.users) );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(apiUrl + '/users/');
-      const responseData = await response.json();
-      setUsers(responseData.users);
+      dispatch(await fetchAllUsers());
     }
     fetchData();
-  }, []);
+  }, [dispatch]);
 
+  if (!users) return null;
+  const userIndexItems = users.map( user => <UserIndexItem key={user.id} user={user}/> )
+  console.log(users);
   return (
-    users.map((user) => <User key={user.id} user={user} />)
+    <>
+     { userIndexItems }
+    </>
   );
 }
 

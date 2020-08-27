@@ -1,9 +1,11 @@
-from flask import Blueprint
+from flask import Blueprint, jsonify
 from starter_app.models import User
 
-users = Blueprint('users', __name__)
+user_routes = Blueprint('users', __name__)
 
-@users.route('/')
+@user_routes.route('/')
 def index():
-  users = User.query.all()
-  return jsonify(users)
+  response = User.query.all()
+  users = dict()
+  for user in response:  users[user.id] = user.to_dict() 
+  return { "users": users }
