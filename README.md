@@ -29,6 +29,6 @@ To run the React Client application, checkout the readme inside the client direc
 8. Release your docker container to heroku `$ heroku container:release web -a {NAME_OF_HEROKU_APP}`
 9. set up your database:
 ```bash
-    $ heroku run python -m database
+    $ heroku run -a {NAME_OF_HEROKU_APP} python -m database
 ```
 10. profit
