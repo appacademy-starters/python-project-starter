@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { apiUrl } from '../config';
 import User from './User';
 
 function UsersList (props) {
@@ -8,7 +7,7 @@ function UsersList (props) {
 
     useEffect(() => {
         async function fetchData() {
-            const response = await fetch(apiUrl + '/users/');
+            const response = await fetch('/api/users/');
             const responseData = await response.json();
             setUsers(responseData.users);
         }
