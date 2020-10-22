@@ -69,7 +69,7 @@ This is the backend for the Flask React project.
    ```
 9. set up your database:
    ```bash
-      $ heroku run -a {NAME_OF_HEROKU_APP} python -m database
+   heroku run -a {NAME_OF_HEROKU_APP} python -m database
    ```
 10. Under Settings find "Config Vars" and add any additional/secret .env variables.
 11. profit
