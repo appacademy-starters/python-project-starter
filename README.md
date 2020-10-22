@@ -5,7 +5,7 @@ This is the backend for the Flask React project.
 ## Getting started
 
 1. Clone this repository
-2. Install dependencies (`pipenv install --python=python3`)
+2. Install dependencies (`pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt --python=python3`)
 3. Create a **.env** file based on the example with proper settings for your
    development environment
 4. Setup your PostgreSQL user, password and database and make sure it matches your **.env** file with CREATEDB privileges
@@ -32,3 +32,7 @@ To run the React Client application, checkout the readme inside the client direc
     $ heroku run -a {NAME_OF_HEROKU_APP} python -m database
 ```
 10. profit
+
+IMPORTANT! If you add any python dependencies to your pipfiles, you'll need to regenerate your requirements.txt before deployment. You can do this by running (`pipenv lock -r > requirements.txt`)
+
+ALSO IMPORTANT! psycopg2-binary MUST remain a dev dependency because you can't install it on apline-linux. There is a layer in the Dockerfile that will install psycopg2 (not binary) for us.
