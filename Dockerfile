@@ -5,6 +5,7 @@ COPY . .
 
 # Install Python Dependencies
 RUN ["pip", "install", "-r", "requirements.txt"]
+RUN ["pip", "install", "psycopg2"]
 
 
 # Build our React App
