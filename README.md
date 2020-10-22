@@ -5,7 +5,7 @@ This is the backend for the Flask React project.
 ## Getting started
 
 1. Clone this repository
-2. Install dependencies (`pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt`)
+2. Install dependencies (`pipenv install --dev -r dev-requirements.txt --python=python3 && pipenv install -r requirements.txt`)
 3. Create a **.env** file based on the example with proper settings for your
    development environment
 4. Setup your PostgreSQL user, password and database and make sure it matches your **.env** file with CREATEDB privileges
