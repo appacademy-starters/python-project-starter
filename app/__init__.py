@@ -1,19 +1,25 @@
 import os
 from flask import Flask, render_template, request, session
 from flask_cors import CORS
+from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 
+from .models import db, User
+from .api.user_routes import user_routes
 
-from starter_app.models import db, User
-from starter_app.api.user_routes import user_routes
+from .seeds import seed_commands
 
-from starter_app.config import Config
+from .config import Config
 
 app = Flask(__name__)
+
+# Tell flask about our seed commands
+app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 db.init_app(app)
+Migrate(app, db)
 
 ## Application Security
 CORS(app)

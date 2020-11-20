@@ -1,30 +1,31 @@
-FROM nikolaik/python-nodejs:python3.8-nodejs14 as base
+FROM node:12 AS build-stage
 
-WORKDIR /var/www
-COPY . .
+WORKDIR /react-app
+COPY client/. .
 
-# Install Python Dependencies
-RUN ["pip", "install", "-r", "requirements.txt"]
-RUN ["pip", "install", "psycopg2"]
-
+# You have to set this because it should be set during build time.
+ENV REACT_APP_BASE_URL=<Your REACT_APP_BASE_URL here>
 
 # Build our React App
-RUN ["npm", "install", "--prefix", "client"]
-RUN ["npm", "run", "build", "--prefix", "client"]
+RUN npm install
+RUN npm run build
 
-# Move our react build for Flask to serve
-# Use cp here because we're copying files inside our working directory, not from
-# our host machine.
-RUN ["cp", "-r", "client/build", "starter_app/static"]
-RUN ["cp", "-r", "starter_app/static/static/js", "starter_app/static"]
-RUN ["cp", "-r", "starter_app/static/static/css", "starter_app/static"]
+FROM python:3.8
 
 # Setup Flask environment
-ENV FLASK_APP=starter_app
+ENV FLASK_APP=app
 ENV FLASK_ENV=production
 ENV SQLALCHEMY_ECHO=True
 
 EXPOSE 8000
 
+WORKDIR /var/www
+COPY . .
+COPY --from=build-stage /react-app/build/* app/static/
+
+# Install Python Dependencies
+RUN pip install -r requirements.txt
+RUN pip install psycopg2
+
 # Run flask environment
-CMD gunicorn starter_app:app
+CMD gunicorn app:app
