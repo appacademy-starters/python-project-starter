@@ -1,20 +1,25 @@
 import React, { useState } from "react";
+import { Redirect } from 'react-router-dom';
 import { signUp } from '../../services/auth';
 
-const SignUpForm = () => {
+const SignUpForm = ({authenticated, setAuthenticated}) => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
-  const onSignUp = (e) => {
+  const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
-      setErrorMessage('');
-      signUp(email, password);
-    } else {
-      setErrorMessage('Passwords must match.');
+      const user = await signUp(username, email, password);
+      if (!user.errors) {
+        setAuthenticated(true);
+      }
     }
+  };
+
+  const updateUsername = (e) => {
+    setUsername(e.target.value);
   };
 
   const updateEmail = (e) => {
@@ -29,10 +34,20 @@ const SignUpForm = () => {
     setRepeatPassword(e.target.value);
   };
 
+  if (authenticated) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <form onSubmit={onSignUp}>
-      <div className='errorMessage'>
-        { errorMessage }
+      <div>
+        <label>User Name</label>
+        <input
+          type="text"
+          name="username"
+          onChange={updateUsername}
+          value={username}
+        ></input>
       </div>
       <div>
         <label>Email</label>
@@ -59,6 +74,7 @@ const SignUpForm = () => {
           name="repeat_password"
           onChange={updateRepeatPassword}
           value={repeatPassword}
+          required={true}
         ></input>
       </div>
       <button type="submit">Sign Up</button>
