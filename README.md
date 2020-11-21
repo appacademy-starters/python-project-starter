@@ -7,13 +7,13 @@ This is the backend for the Flask React project.
 1. Clone this repository (only this branch)
 
    ```bash
-   git clone https://github.com/appacademy-starters/react-project-starter.git --branch flask-project-starter --single-branch
+   git clone https://github.com/appacademy-starters/react-project-starter.git
    ```
 
 2. Install dependencies
 
       ```bash
-      pipenv install --dev -r dev-requirements.txt --python=python3 && pipenv install -r requirements.txt
+      pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
       ```
 
 3. Create a **.env** file based on the example with proper settings for your
@@ -38,7 +38,7 @@ This is the backend for the Flask React project.
    flask run
    ```
 
-6. To run the React App in development, checkout the [README](./client/README.md) inside the client directory.
+6. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
 
 ***
 *IMPORTANT!*

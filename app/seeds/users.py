@@ -3,10 +3,9 @@ from app.models import db, User
 
 # Adds a demo user, you can add other users here if you want
 def seed_users():
-    default_password = generate_password_hash('password')
 
     demo = User(username='Demo', email='demo@aa.io',
-                hashed_password=default_password)
+                password='password')
 
     db.session.add(demo)
 
