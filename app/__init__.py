@@ -17,10 +17,13 @@ app = Flask(__name__)
 
 # Setup login manager
 login = LoginManager(app)
+login.login_view = 'auth.unauthorized'
+
 
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
 
 # Tell flask about our seed commands
 app.cli.add_command(seed_commands)
@@ -31,16 +34,19 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 db.init_app(app)
 Migrate(app, db)
 
-
-## Application Security
+# Application Security
 CORS(app)
+
+
 @app.after_request
 def inject_csrf_token(response):
     response.set_cookie('csrf_token',
-        generate_csrf(),
-        secure=True if os.environ.get('FLASK_ENV') == 'production' else False,
-        samesite='Strict' if os.environ.get('FLASK_ENV') == 'production' else None,
-        httponly=True)
+                        generate_csrf(),
+                        secure=True if os.environ.get(
+                            'FLASK_ENV') == 'production' else False,
+                        samesite='Strict' if os.environ.get(
+                            'FLASK_ENV') == 'production' else None,
+                        httponly=True)
     return response
 
 
