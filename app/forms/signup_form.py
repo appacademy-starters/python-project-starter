@@ -12,7 +12,7 @@ def user_exists(form, field):
         raise ValidationError("User is already registered.")
 
 def username_exists(form, field):
-    print('check fs username exists', field.data)
+    print('check if username exists', field.data)
     username = field.data
     user = User.query.filter(User.username == username).first()
     if user:
