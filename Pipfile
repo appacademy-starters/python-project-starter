@@ -32,6 +32,7 @@ PyJWT = "==1.7.1"
 psycopg2-binary = "==2.8.6"
 autopep8 = "*"
 pylint = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.8"
