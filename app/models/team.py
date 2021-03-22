@@ -1,7 +1,7 @@
 from .db import db, col, flo, num, fk, pk, string, boo
 
 class Team(db.Model):
-    __tablename__="teams"
+    __tablename__ = "teams"
 
     id = col(num, pk = True)
     name  = col(string, nullable = False)
