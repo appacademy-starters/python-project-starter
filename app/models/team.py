@@ -5,8 +5,11 @@ class Team(db.Model):
 
     id = col(num, pk = True)
     name  = col(string, nullable = False)
-    conference = col(num, fk("conferences.id"), nullable = False)
-    seed = col(num, nullable = False)
+    conference_id = col(num, fk("conferences.id"), nullable = False)
+    seed_id = col(num, fk("seeds.id"), nullable = False)
+
+    conference = db.relationship("Conference", back_populates="teams")
+    seed = db.relationship("Seed", back_populates="team")
 
     def to_dict(self):
         return {

@@ -6,6 +6,8 @@ class Conference(db.model):
     id = col(num, pk = True)
     name = col(string, nullable = False)
 
+    teams = db.relationship("Team", back_populates="teams")
+
     def to_dict(self):
         return {
             "id": self.id,
