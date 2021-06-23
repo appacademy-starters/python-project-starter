@@ -1,6 +1,0 @@
-{
-    "python.pythonPath": "/home/echo/dev/appacademy/starters/python-project-starter/.venv/bin/python",
-    "python.linting.pylintEnabled": false,
-    "python.linting.enabled": true,
-    "python.linting.pycodestyleEnabled": true
-}
