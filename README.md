@@ -93,16 +93,16 @@ hurt to run it again.
 
 9. Release your docker container to heroku
 
-   ```bash
-   heroku container:release web -a {NAME_OF_HEROKU_APP}
-   ```
+      ```bash
+      heroku container:release web -a {NAME_OF_HEROKU_APP}
+      ```
 
 10. set up your database
 
-   ```bash
-   heroku run -a {NAME_OF_HEROKU_APP} flask db upgrade
-   heroku run -a {NAME_OF_HEROKU_APP} flask seed all
-   ```
+      ```bash
+      heroku run -a {NAME_OF_HEROKU_APP} flask db upgrade
+      heroku run -a {NAME_OF_HEROKU_APP} flask seed all
+      ```
 
 11. Under Settings find "Config Vars" and add any additional/secret .env
 variables.
@@ -129,6 +129,6 @@ of your Heroku app in the url and tag name:
 
 3. Use docker to push the image to the Heroku container registry:
 
-```bash=3
-docker push registry.heroku.com/{NAME_OF_HEROKU_APP}/web
-```
+   ```bash=3
+   docker push registry.heroku.com/{NAME_OF_HEROKU_APP}/web
+   ```
