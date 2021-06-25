@@ -1,6 +1,6 @@
 # Flask React Project
 
-This is the backend for the Flask React project.
+This is the starter for the Flask React project.
 
 ## Getting started
 
@@ -84,8 +84,8 @@ hurt to run it again.
 7. Update the `REACT_APP_BASE_URL` variable in the Dockerfile.
    This should be the full URL of your Heroku app: i.e. "https://flask-react-aa.herokuapp.com"
 8. Push your docker container to heroku from the root directory of your project.
-   (If you are using an M1 mac, follow [these steps below](#for-m1-mac-users) instead, then continue on to step 8.)
-   This will build the dockerfile and push the image to your heroku container registry.
+   (If you are using an M1 mac, follow [these steps below](#for-m1-mac-users) instead, then continue on to step 9.)
+   This will build the Dockerfile and push the image to your heroku container registry.
 
    ```bash
    heroku container:push web -a {NAME_OF_HEROKU_APP}
