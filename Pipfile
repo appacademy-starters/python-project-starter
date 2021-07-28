@@ -25,9 +25,9 @@ python-dateutil = "==2.8.1"
 python-editor = "==1.0.4"
 greenlet = "==1.1.0"
 Mako = "==1.1.4"
+psycopg2 = "2.9.1"
 
 [dev-packages]
-psycopg2-binary = "==2.8.6"
 
 [requires]
 python_version = "3.9"
