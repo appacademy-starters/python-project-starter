@@ -35,9 +35,9 @@ app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 
 
-@app.route('/')
-def serve():
-    return send_from_directory(app.static_folder, 'index.html')
+# @app.route('/')
+# def serve():
+#     return send_from_directory(app.static_folder, 'index.html')
 
 
 db.init_app(app)
@@ -77,5 +77,6 @@ def inject_csrf_token(response):
 @app.route('/<path:path>')
 def react_root(path):
     if path == 'favicon.ico':
-        return app.send_static_file('favicon.ico')
-    return app.send_static_file('index.html')
+        # return app.send_static_file('favicon.ico')
+        return send_from_directory(app.static_folder, 'favicon.ico')
+    return send_from_directory(app.static_folder, 'index.html')
