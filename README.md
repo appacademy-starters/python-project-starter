@@ -63,7 +63,7 @@ This is the starter for the Flask React project.
 
    ```bash
    heroku git:remote -a <NAME-OF-HEROKU-APP>
-   git push heroku <LOCAL-BRANCH-TO-PUSH>:master
+   git push heroku <LOCAL-BRANCH-TO-PUSH>:main
    ```
 
 6. set up your database
@@ -75,8 +75,11 @@ This is the starter for the Flask React project.
 
 7. Under Settings in your heroku dashboard find "Config Vars" and add these keys
    as well as any additional secret key/value pairs you have in your **.env**:
-   1. SECRET_KEY=<YOUR_SECRET_KEY>
-   2. FLASK_ENV=PRODUCTION
-   3. SQLALCHEMY_ECHO=True
+
+   ```bash
+   SECRET_KEY=<YOUR_SECRET_KEY>
+   FLASK_ENV=PRODUCTION
+   SQLALCHEMY_ECHO=True
+   ```
 
 8. profit
