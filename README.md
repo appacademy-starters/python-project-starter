@@ -27,7 +27,7 @@ This is the starter for the Flask React project.
    ```
 
 6. Create the initial file structure and first migration file:
-   - **IMPORTNAT BEFORE STARTING THIS STEP**:
+   - **IMPORTANT BEFORE STARTING THIS STEP**:
       - only **ONE** group member should do this on a seprate branch **BEFORE** anyone else sets up their database
   
    - Initialize alembic(creates migration folder in `app/migrations`):
@@ -39,7 +39,7 @@ This is the starter for the Flask React project.
    - Create your first migration file with the name "Initial migration":
 
    ```bash
-   flask db migrate -m "Initial migration"
+   flask db migrate -m "initial migration"
    ```
 
    - **IMPORTANT AFTER THIS STEP**:
