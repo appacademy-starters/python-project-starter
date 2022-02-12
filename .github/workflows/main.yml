@@ -15,3 +15,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: react-flask
           heroku_email: alexsoncoelho21@hotmail.com
+          usedocker: true
