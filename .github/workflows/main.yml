@@ -16,3 +16,4 @@ jobs:
           heroku_app_name: lit-journey-17658
           heroku_email: alexsoncoelho21@hotmail.com
           usedocker: true
+          procfile: "release: flask db upgrade"
