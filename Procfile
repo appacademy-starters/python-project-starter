@@ -1,0 +1,1 @@
+release: flask db upgrade
