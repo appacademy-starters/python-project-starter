@@ -1,1 +1,1 @@
-release: flask db upgrade
+upgrade: flask db upgrade
