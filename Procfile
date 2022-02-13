@@ -1,1 +1,0 @@
-upgrade: flask db upgrade
