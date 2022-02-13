@@ -13,6 +13,6 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: react-flask
+          heroku_app_name: lit-journey-17658
           heroku_email: alexsoncoelho21@hotmail.com
           usedocker: true
