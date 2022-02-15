@@ -9,7 +9,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
 import { authenticate } from "./store/session";
-import { OrderForm } from "./orders/OrderForm";
+import { OrderFormView } from "./orders/OrderFormView";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -42,8 +42,8 @@ function App() {
         <ProtectedRoute path='/users/:userId' exact={true}>
           <User />
         </ProtectedRoute>
-        <ProtectedRoute path='/' exact={true}>
-          <OrderForm />
+        <ProtectedRoute path='/new-order' exact={true}>
+          <OrderFormView />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>
