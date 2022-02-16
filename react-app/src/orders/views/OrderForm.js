@@ -1,25 +1,25 @@
 import React, { useState } from "react";
-import "./order-styles.css";
+import { useHistory } from "react-router-dom";
+import "../order-styles.css";
 import { Col, Container, Form, Row, Button } from "react-bootstrap";
-import { FormInputCard } from "./components/FormInputCard";
-import { FormTitleCard } from "./components/FormTitleCard";
-import { useForm } from "../hooks/useForm";
+import { useForm } from "../../hooks/useForm";
+import { FormInputCard } from "../components/FormInputCard";
+import { FormTitleCard } from "../components/FormTitleCard";
 
 const initialForm = {
   company: "",
   email: "",
 };
 
-const newClientAction = (formValues) => {
-  alert("new-client");
-  console.log(formValues);
+const newClientAction = (formValues, action) => {
+  action();
 };
-const recurrentClientAction = (formValues) => {
-  alert("recurrent-client");
-  console.log(formValues);
+const recurrentClientAction = (formValues, action) => {
+  action();
 };
 
-export const OrderFormView = () => {
+export const OrderForm = () => {
+  const history = useHistory();
   const [formValues, handleInputChange, reset] = useForm(initialForm);
   const { company, email } = formValues;
   const [clientType, setClientType] = useState("recurrent-client");
@@ -27,10 +27,10 @@ export const OrderFormView = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (clientType === "new-client") {
-      newClientAction(formValues);
+      newClientAction(formValues, () => history.push("new-client"));
       return;
     }
-    recurrentClientAction(formValues);
+    recurrentClientAction(formValues, () => history.push("select-product"));
     reset();
   };
   return (
