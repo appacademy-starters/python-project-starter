@@ -5,6 +5,8 @@ import { Col, Container, Form, Row, Button } from "react-bootstrap";
 import { useForm } from "../../hooks/useForm";
 import { FormInputCard } from "../components/FormInputCard";
 import { FormTitleCard } from "../components/FormTitleCard";
+import { useDispatch } from "react-redux";
+import { setCustomer } from "../../store/orders";
 
 const initialForm = {
   company: "",
@@ -19,6 +21,7 @@ const recurrentClientAction = (formValues, action) => {
 };
 
 export const OrderForm = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [formValues, handleInputChange, reset] = useForm(initialForm);
   const { company, email } = formValues;
@@ -31,6 +34,7 @@ export const OrderForm = () => {
       return;
     }
     recurrentClientAction(formValues, () => history.push("select-product"));
+    dispatch(setCustomer(formValues));
     reset();
   };
   return (
