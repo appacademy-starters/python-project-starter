@@ -1,33 +1,31 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import "../order-styles.css";
-import { Card, Col, Container, Form, Row, Button } from "react-bootstrap";
-import Image from "react-bootstrap/Image";
-import { useForm } from "../../hooks/useForm";
-import { FormInputCard } from "../components/FormInputCard";
-import { FormTitleCard } from "../components/FormTitleCard";
+import { Card, Col, Container, Row, Button } from "react-bootstrap";
+
+import { Product } from "../components/Product";
 
 const arrayProduct = [
   {
-    src: "https://via.placeholder.com/250",
+    src: "https://via.placeholder.com/50",
     alt: "",
     title: "vinyl",
     description: "stari-noses",
   },
   {
-    src: "https://via.placeholder.com/250",
+    src: "https://via.placeholder.com/50",
     alt: "",
     title: "engineered wood",
     description: "stari-noses",
   },
   {
-    src: "https://via.placeholder.com/250",
+    src: "https://via.placeholder.com/50",
     alt: "",
     title: "mouldings",
     description: "",
   },
   {
-    src: "https://via.placeholder.com/250",
+    src: "https://via.placeholder.com/50",
     alt: "",
     title: "whiteriser",
     description: "",
@@ -44,22 +42,26 @@ export const SelectProduct = () => {
         <Col xs={6}>
           <Card className='mb-3'>
             <Card.Header className='bg-secondary'>Select a Product</Card.Header>
-            <Card.Body className='p-0'>
-              {arrayProduct.map((product, index) => (
-                <>
-                  <Card.Title>{product.title}</Card.Title>
-                  <Card.Text>{product.description}</Card.Text>
-                  <img
-                    src={product.src}
-                    class='img-thumbnail'
-                    alt={product.alt}
-                  />
-                  {/* <span className='p-5'></span> */}
-                </>
+            <Row xs={2}>
+              {arrayProduct.map((product) => (
+                <Product key={product.title} {...product} />
               ))}
-            </Card.Body>
+            </Row>
           </Card>
         </Col>
+        <Col />
+      </Row>
+      <Row className='mb-4'>
+        <Col>
+          <Button
+            onClick={() => history.push("new-order")}
+            variant='secondary'
+            className='float-end'
+          >
+            Back to start
+          </Button>
+        </Col>
+        <Col xs={6} />
         <Col />
       </Row>
     </Container>
