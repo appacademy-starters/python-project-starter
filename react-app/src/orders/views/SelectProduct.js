@@ -19,10 +19,10 @@ export const SelectProduct = () => {
             <Row xs={2}>
               {arrayProduct.map((product) => (
                 <Product
-                  key={product.title}
+                  key={product.id}
                   {...product}
                   handleClick={() =>
-                    history.push(`product-order/${product.title}`)
+                    history.push(`product-order/${product.id}`)
                   }
                 />
               ))}

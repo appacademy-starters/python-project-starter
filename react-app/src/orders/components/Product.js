@@ -9,7 +9,7 @@ export const Product = ({ src, alt, title, description, handleClick }) => {
         <Card.Body className='m-4 rounded border border-dark'>
           <Card.Title>{title}</Card.Title>
           <Card.Text>{description}</Card.Text>
-          <img src={src} class='rounded mx-auto d-block' alt={alt} />
+          <img src={src} className='rounded mx-auto d-block' alt={alt} />
         </Card.Body>
         <Button className='m-2' variant='dark' onClick={handleClick}>
           Select
@@ -24,5 +24,5 @@ Product.propTypes = {
   alt: PropTypes.string,
   title: PropTypes.string,
   description: PropTypes.string,
-  handleClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func,
 };
