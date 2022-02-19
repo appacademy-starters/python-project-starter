@@ -9,7 +9,10 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
 import { authenticate } from "./store/session";
-import { OrderFormView } from "./orders/OrderFormView";
+import { OrderForm } from "./orders/views/OrderForm";
+import { ContactForm } from "./orders/views/ContactForm";
+import { SelectProduct } from "./orders/views/SelectProduct";
+import { SelectProductDetails } from "./orders/views/SelectProductDetails";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -43,7 +46,16 @@ function App() {
           <User />
         </ProtectedRoute>
         <ProtectedRoute path='/new-order' exact={true}>
-          <OrderFormView />
+          <OrderForm />
+        </ProtectedRoute>
+        <ProtectedRoute path='/new-client' exact={true}>
+          <ContactForm />
+        </ProtectedRoute>
+        <ProtectedRoute path='/select-product' exact={true}>
+          <SelectProduct />
+        </ProtectedRoute>
+        <ProtectedRoute path='/product-order/:productId' exact={true}>
+          <SelectProductDetails />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>
