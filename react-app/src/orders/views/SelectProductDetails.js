@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import "../order-styles.css";
 import { Card, Col, Container, Row, Button, Form } from "react-bootstrap";
@@ -18,7 +18,8 @@ const initialForm = {
 
 export const SelectProductDetails = () => {
   const history = useHistory();
-  let { productOrder } = useParams();
+  let { productId } = useParams();
+
   const [formValues, handleInputChange, reset] = useForm(initialForm);
   const { specialSize, addOns, quantity, poJobName } = formValues;
 
@@ -27,13 +28,22 @@ export const SelectProductDetails = () => {
     reset();
   };
 
+  const [currentProduct, setCurrentProduct] = useState(null);
+  useEffect(() => {
+    const product = arrayProduct.find((product) => product.id === productId);
+    setCurrentProduct(product);
+  }, [productId]);
+
+  if (!currentProduct) return "Loading";
   return (
     <Container fluid>
       <Row>
         <Col />
         <Col md={5}>
           <Card className='mb-3'>
-            <Card.Header className='bg-secondary'>{productOrder}</Card.Header>
+            <Card.Header className='bg-secondary'>
+              {currentProduct.title}
+            </Card.Header>
             <Form onSubmit={handleSubmit} className='p-4'>
               <Form.Label>PO#/ Job Name</Form.Label>
               <Form.Control

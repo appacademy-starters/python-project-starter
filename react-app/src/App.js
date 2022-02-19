@@ -54,7 +54,7 @@ function App() {
         <ProtectedRoute path='/select-product' exact={true}>
           <SelectProduct />
         </ProtectedRoute>
-        <ProtectedRoute path='/product-order/:productOrder' exact={true}>
+        <ProtectedRoute path='/product-order/:productId' exact={true}>
           <SelectProductDetails />
         </ProtectedRoute>
       </Switch>
