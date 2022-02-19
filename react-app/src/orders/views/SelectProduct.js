@@ -2,35 +2,9 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import "../order-styles.css";
 import { Card, Col, Container, Row, Button } from "react-bootstrap";
+import { arrayProduct } from "../products";
 
 import { Product } from "../components/Product";
-
-const arrayProduct = [
-  {
-    src: "https://via.placeholder.com/50",
-    alt: "",
-    title: "vinyl",
-    description: "stari-noses",
-  },
-  {
-    src: "https://via.placeholder.com/50",
-    alt: "",
-    title: "engineered wood",
-    description: "stari-noses",
-  },
-  {
-    src: "https://via.placeholder.com/50",
-    alt: "",
-    title: "mouldings",
-    description: "",
-  },
-  {
-    src: "https://via.placeholder.com/50",
-    alt: "",
-    title: "whiteriser",
-    description: "",
-  },
-];
 
 export const SelectProduct = () => {
   const history = useHistory();
@@ -44,7 +18,13 @@ export const SelectProduct = () => {
             <Card.Header className='bg-secondary'>Select a Product</Card.Header>
             <Row xs={2}>
               {arrayProduct.map((product) => (
-                <Product key={product.title} {...product} />
+                <Product
+                  key={product.title}
+                  {...product}
+                  handleClick={() =>
+                    history.push(`product-order/${product.title}`)
+                  }
+                />
               ))}
             </Row>
           </Card>

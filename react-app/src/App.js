@@ -12,6 +12,7 @@ import { authenticate } from "./store/session";
 import { OrderForm } from "./orders/views/OrderForm";
 import { ContactForm } from "./orders/views/ContactForm";
 import { SelectProduct } from "./orders/views/SelectProduct";
+import { SelectProductDetails } from "./orders/views/SelectProductDetails";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -52,6 +53,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path='/select-product' exact={true}>
           <SelectProduct />
+        </ProtectedRoute>
+        <ProtectedRoute path='/product-order/:productOrder' exact={true}>
+          <SelectProductDetails />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>
