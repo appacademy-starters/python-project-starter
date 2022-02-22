@@ -9,26 +9,28 @@ import { FormTitleCard } from "../components/FormTitleCard";
 import { FormInputCard } from "../components/FormInputCard";
 import { useForm } from "../../hooks/useForm";
 
-const initialForm = {
-  specialSize: "",
-  addOns: "",
-  quantity: "",
-  poJobName: "",
-};
+import { useDispatch, useSelector } from "react-redux";
+import { setOrderDetails } from "../../store/orders";
 
 export const SelectProductDetails = () => {
+  const orderDetails = useSelector((state) => state.orders.orderDetails);
+  const dispatch = useDispatch();
   const history = useHistory();
   let { productId } = useParams();
 
-  const [formValues, handleInputChange, reset] = useForm(initialForm);
-  const { specialSize, addOns, quantity, poJobName } = formValues;
+  const [formValues, handleInputChange, reset] = useForm(orderDetails);
+  const { notes, quantity, poJobName, product } = formValues;
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(formValues);
+    dispatch(setOrderDetails(formValues));
     reset();
+    history.push("/select-product");
   };
 
   const [currentProduct, setCurrentProduct] = useState(null);
+
   useEffect(() => {
     const product = arrayProduct.find((product) => product.id === productId);
     setCurrentProduct(product);
@@ -45,6 +47,7 @@ export const SelectProductDetails = () => {
               {currentProduct.title}
             </Card.Header>
             <Form onSubmit={handleSubmit} className='p-4'>
+              <input type='hidden' name='product' value={product} />
               <Form.Label>PO#/ Job Name</Form.Label>
               <Form.Control
                 className='custom-input'
@@ -55,7 +58,6 @@ export const SelectProductDetails = () => {
                 onChange={handleInputChange}
               />
             </Form>
-
             <Row xs={2}>
               {arrayProduct.map((product) => (
                 <Product key={product.title} {...product} />
@@ -69,30 +71,21 @@ export const SelectProductDetails = () => {
             <FormInputCard inputLabel='Quantity'>
               <Form.Control
                 className='custom-input'
-                type='text'
-                placeholder='Your answer'
+                type='number'
+                placeholder='Your quantity'
                 value={quantity}
                 name='quantity'
                 onChange={handleInputChange}
               />
             </FormInputCard>
-            <FormInputCard inputLabel='Special size / Notes'>
+            <FormInputCard inputLabel={currentProduct.notesLabel}>
               <Form.Control
+                as='textarea'
+                rows={3}
                 className='custom-input'
-                type='text'
                 placeholder='Your Answer'
-                value={specialSize}
-                name='specialSize'
-                onChange={handleInputChange}
-              />
-            </FormInputCard>
-            <FormInputCard inputLabel='Add ons'>
-              <Form.Control
-                className='custom-input'
-                type='text'
-                placeholder='Your Answer'
-                value={addOns}
-                name='addOns'
+                value={notes}
+                name='notes'
                 onChange={handleInputChange}
               />
             </FormInputCard>
@@ -102,15 +95,18 @@ export const SelectProductDetails = () => {
                   type='submit'
                   variant='dark'
                   size='lg'
-                  //   onClick={() => setClientType("new-client")}
+                  onClick={(event) => handleSubmit(event)}
                 >
                   Yes, add more products
                 </Button>
                 <Button
-                  //   onClick={() => setClientType("recurrent-client")}
                   type='submit'
                   variant='dark'
                   size='lg'
+                  onClick={(event) => {
+                    handleSubmit(event);
+                    alert("order completed");
+                  }}
                 >
                   No, i'm finished
                 </Button>

@@ -5,35 +5,25 @@ import { Col, Container, Form, Row, Button } from "react-bootstrap";
 import { useForm } from "../../hooks/useForm";
 import { FormInputCard } from "../components/FormInputCard";
 import { FormTitleCard } from "../components/FormTitleCard";
-import { useDispatch } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
 import { setCustomer } from "../../store/orders";
-
-const initialForm = {
-  company: "",
-  email: "",
-};
-
-const newClientAction = (formValues, action) => {
-  action();
-};
-const recurrentClientAction = (formValues, action) => {
-  action();
-};
 
 export const OrderForm = () => {
   const dispatch = useDispatch();
+  const customer = useSelector((state) => state.orders.customer);
   const history = useHistory();
-  const [formValues, handleInputChange, reset] = useForm(initialForm);
+  const [formValues, handleInputChange, reset] = useForm(customer);
   const { company, email } = formValues;
   const [clientType, setClientType] = useState("recurrent-client");
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (clientType === "new-client") {
-      newClientAction(formValues, () => history.push("new-client"));
+      history.push("new-client");
       return;
     }
-    recurrentClientAction(formValues, () => history.push("select-product"));
+    history.push("select-product");
     dispatch(setCustomer(formValues));
     reset();
   };

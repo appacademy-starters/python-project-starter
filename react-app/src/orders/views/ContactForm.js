@@ -5,25 +5,23 @@ import { Col, Container, Form, Row, Button } from "react-bootstrap";
 import { useForm } from "../../hooks/useForm";
 import { FormInputCard } from "../components/FormInputCard";
 import { ContactFormTitle } from "../components/ContactFormTitle";
-
-const initialForm = {
-  fullName: "",
-  company: "",
-  email: "",
-  phoneNumber: "",
-  address: "",
-};
+import { useDispatch, useSelector } from "react-redux";
+import { setCustomer } from "../../store/orders";
 
 const bodyTxt = `if this is your first time filling out an order on our new form please fill out your contact details so we can  update your profile.`;
 
 export const ContactForm = () => {
   const history = useHistory();
-  const [formValues, handleInputChange, reset] = useForm(initialForm);
+  const customer = useSelector((state) => state.orders.customer);
+  const dispatch = useDispatch();
+  const [formValues, handleInputChange, reset] = useForm(customer);
   const { fullName, company, email, phoneNumber, address } = formValues;
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    dispatch(setCustomer(formValues));
     reset();
+    history.push("select-product");
   };
   return (
     <Container fluid>
@@ -98,10 +96,7 @@ export const ContactForm = () => {
         </Col>
         <Col xs={6} />
         <Col>
-          <Button
-            onClick={() => history.push("select-product")}
-            variant='secondary'
-          >
+          <Button onClick={(event) => handleSubmit(event)} variant='secondary'>
             Next: Choose Products
           </Button>
         </Col>

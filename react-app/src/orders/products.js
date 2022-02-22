@@ -5,7 +5,7 @@ export const arrayProduct = [
     alt: "",
     title: "vinyl",
     description: "stari-noses",
-    formFields: ["specialSize", "addOns"],
+    notesLabel: "Special Size - Add Ons / Notes",
   },
   {
     id: "engineeredwood02",
@@ -13,7 +13,7 @@ export const arrayProduct = [
     alt: "",
     title: "engineered wood",
     description: "stari-noses",
-    formFields: ["specialSize", "addOns"],
+    notesLabel: "Wood Thickness / Notes",
   },
   {
     id: "mouldings03",
@@ -21,7 +21,7 @@ export const arrayProduct = [
     alt: "",
     title: "mouldings",
     description: "",
-    formFields: ["specialSize", "addOns"],
+    notesLabel: "Special Size / Notes",
   },
   {
     id: "whiteriser03",
@@ -29,6 +29,6 @@ export const arrayProduct = [
     alt: "",
     title: "whiteriser",
     description: "",
-    formFields: ["specialSize", "addOns"],
+    notesLabel: "Special Size / Notes",
   },
 ];
