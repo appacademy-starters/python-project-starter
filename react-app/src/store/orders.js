@@ -19,6 +19,8 @@ const initialState = {
     email: "",
     phoneNumber: "",
     address: "",
+    unit: "",
+    zipCode: "",
   },
   orderDetails: {
     product: "",

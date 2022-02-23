@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../order-styles.css";
 import { Col, Container, Form, Row, Button } from "react-bootstrap";
@@ -7,19 +7,21 @@ import { FormInputCard } from "../components/FormInputCard";
 import { ContactFormTitle } from "../components/ContactFormTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { setCustomer } from "../../store/orders";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 
 const bodyTxt = `if this is your first time filling out an order on our new form please fill out your contact details so we can  update your profile.`;
 
 export const ContactForm = () => {
+  const [address, setAddress] = useState(null);
   const history = useHistory();
   const customer = useSelector((state) => state.orders.customer);
   const dispatch = useDispatch();
   const [formValues, handleInputChange, reset] = useForm(customer);
-  const { fullName, company, email, phoneNumber, address } = formValues;
+  const { fullName, company, email, phoneNumber, unit, zipCode } = formValues;
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(setCustomer(formValues));
+    dispatch(setCustomer({ ...formValues, address }));
     reset();
     history.push("select-product");
   };
@@ -71,12 +73,35 @@ export const ContactForm = () => {
               />
             </FormInputCard>
             <FormInputCard inputLabel='Address, City, State, Zip Code'>
+              <GooglePlacesAutocomplete
+                apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+                selectProps={{
+                  address,
+                  onChange: setAddress,
+                  isClearable: true,
+                }}
+                onLoadFailed={(error) =>
+                  console.error("Could not inject Google script", error)
+                }
+              />
+            </FormInputCard>
+            <FormInputCard inputLabel='Apartment, unit, suite, or floor #'>
               <Form.Control
                 className='custom-input'
                 type='text'
                 placeholder='Your answer'
-                value={address}
-                name='address'
+                value={unit}
+                name='unit'
+                onChange={handleInputChange}
+              />
+            </FormInputCard>
+            <FormInputCard inputLabel='Zip Code'>
+              <Form.Control
+                className='custom-input'
+                type='text'
+                placeholder='Your answer'
+                value={zipCode}
+                name='zipCode'
                 onChange={handleInputChange}
               />
             </FormInputCard>
