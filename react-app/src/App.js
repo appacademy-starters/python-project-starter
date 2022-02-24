@@ -13,6 +13,7 @@ import { OrderForm } from "./orders/views/OrderForm";
 import { ContactForm } from "./orders/views/ContactForm";
 import { SelectProduct } from "./orders/views/SelectProduct";
 import { SelectProductDetails } from "./orders/views/SelectProductDetails";
+import { DeliveryForm } from "./orders/views/DeliveryForm";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -53,6 +54,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path='/select-product' exact={true}>
           <SelectProduct />
+        </ProtectedRoute>
+        <ProtectedRoute path='/product-order/delivey' exact={true}>
+          <DeliveryForm />
         </ProtectedRoute>
         <ProtectedRoute path='/product-order/:productId' exact={true}>
           <SelectProductDetails />
