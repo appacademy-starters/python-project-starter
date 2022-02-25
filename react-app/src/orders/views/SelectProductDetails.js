@@ -14,19 +14,25 @@ import { setOrderDetails } from "../../store/orders";
 
 export const SelectProductDetails = () => {
   const orderDetails = useSelector((state) => state.orders.orderDetails);
+  const [productModel, setProductModel] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
   let { productId } = useParams();
 
   const [formValues, handleInputChange, reset] = useForm(orderDetails);
-  const { notes, quantity, poJobName, product } = formValues;
+  const { notes, quantity, poJobName } = formValues;
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formValues);
-    dispatch(setOrderDetails(formValues));
+    dispatch(
+      setOrderDetails({
+        ...formValues,
+        productModel,
+        product: currentProduct?.title,
+      })
+    );
     reset();
-    history.push("/select-product");
+    history.push("/product-order/delivey");
   };
 
   const [currentProduct, setCurrentProduct] = useState(null);
@@ -47,7 +53,6 @@ export const SelectProductDetails = () => {
               {currentProduct.title}
             </Card.Header>
             <Form onSubmit={handleSubmit} className='p-4'>
-              <input type='hidden' name='product' value={product} />
               <Form.Label>PO#/ Job Name</Form.Label>
               <Form.Control
                 className='custom-input'
@@ -60,7 +65,19 @@ export const SelectProductDetails = () => {
             </Form>
             <Row xs={2}>
               {arrayProduct.map((product) => (
-                <Product key={product.title} {...product} />
+                <Product
+                  key={product.title}
+                  {...product}
+                  styles={product.styles}
+                  handleClick={() => {
+                    setProductModel(product.title);
+                    arrayProduct.map((_product) =>
+                      _product.id === product.id
+                        ? (_product.styles = "text-white bg-dark")
+                        : (_product.styles = "")
+                    );
+                  }}
+                />
               ))}
             </Row>
           </Card>
@@ -105,7 +122,6 @@ export const SelectProductDetails = () => {
                   size='lg'
                   onClick={(event) => {
                     handleSubmit(event);
-                    alert("order completed");
                   }}
                 >
                   No, i'm finished

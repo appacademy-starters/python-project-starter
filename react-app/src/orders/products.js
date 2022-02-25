@@ -6,6 +6,7 @@ export const arrayProduct = [
     title: "vinyl",
     description: "stari-noses",
     notesLabel: "Special Size - Add Ons / Notes",
+    styles: "",
   },
   {
     id: "engineeredwood02",
@@ -14,6 +15,7 @@ export const arrayProduct = [
     title: "engineered wood",
     description: "stari-noses",
     notesLabel: "Wood Thickness / Notes",
+    styles: "",
   },
   {
     id: "mouldings03",
@@ -22,6 +24,7 @@ export const arrayProduct = [
     title: "mouldings",
     description: "",
     notesLabel: "Special Size / Notes",
+    styles: "",
   },
   {
     id: "whiteriser03",
@@ -30,5 +33,6 @@ export const arrayProduct = [
     title: "whiteriser",
     description: "",
     notesLabel: "Special Size / Notes",
+    styles: "",
   },
 ];
