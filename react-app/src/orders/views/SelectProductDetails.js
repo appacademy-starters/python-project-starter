@@ -22,7 +22,7 @@ export const SelectProductDetails = () => {
   const [formValues, handleInputChange, reset] = useForm(orderDetails);
   const { notes, quantity, poJobName } = formValues;
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event, nextAction) => {
     event.preventDefault();
     dispatch(
       setOrderDetails({
@@ -32,7 +32,13 @@ export const SelectProductDetails = () => {
       })
     );
     reset();
-    history.push("/product-order/delivey");
+    if (nextAction === "shipping_details")
+      history.push("/product-order/delivey");
+    else if (nextAction === "add_more_products")
+      history.push("/select-product");
+    else {
+      alert("no further action");
+    }
   };
 
   const [currentProduct, setCurrentProduct] = useState(null);
@@ -112,7 +118,7 @@ export const SelectProductDetails = () => {
                   type='submit'
                   variant='dark'
                   size='lg'
-                  onClick={(event) => handleSubmit(event)}
+                  onClick={(event) => handleSubmit(event, "add_more_products")}
                 >
                   Yes, add more products
                 </Button>
@@ -121,7 +127,7 @@ export const SelectProductDetails = () => {
                   variant='dark'
                   size='lg'
                   onClick={(event) => {
-                    handleSubmit(event);
+                    handleSubmit(event, "shipping_details");
                   }}
                 >
                   No, i'm finished

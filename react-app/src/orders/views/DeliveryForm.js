@@ -3,8 +3,7 @@ import "../order-styles.css";
 import { Col, Container, Form, Row, Button } from "react-bootstrap";
 import { FormInputCard } from "../components/FormInputCard";
 import { ContactFormTitle } from "../components/ContactFormTitle";
-
-import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const bodyTxt = "Roundtrip shipping $30";
 
@@ -16,19 +15,14 @@ const deliveryOptions = [
 
 export const DeliveryForm = () => {
   const [selectedOption, setSelectedOption] = useState(null);
-  const customer = useSelector((state) => state.orders.customer);
-  const orderDetails = useSelector((state) => state.orders.orderDetails);
+  const history = useHistory();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(
-      `Confirm Your Order: ${JSON.stringify({
-        customer,
-        orderDetails,
-        shipping: selectedOption,
-      })}`
-    );
-    console.log(selectedOption);
+    history.push({
+      pathname: "/order-review",
+      state: selectedOption,
+    });
   };
 
   const changeList = (id, checked) => {
@@ -41,7 +35,7 @@ export const DeliveryForm = () => {
         <Col />
         <Col xs={6}>
           <ContactFormTitle title='Delivery' bodyTxt={bodyTxt} />
-          <Form autocomplete='off' onSubmit={handleSubmit}>
+          <Form autoComplete='off' onSubmit={handleSubmit}>
             <FormInputCard inputLabel='Pick Up / Drop Off by'>
               {deliveryOptions.map(({ id, name }) => (
                 <div key={id}>
@@ -64,9 +58,22 @@ export const DeliveryForm = () => {
       <Row className='mb-4'>
         <Col className='text-center'>
           <Button onClick={handleSubmit} variant='secondary'>
-            Submit Order
+            Review Order
           </Button>
         </Col>
+      </Row>
+      <Row className='mb-4'>
+        <Col>
+          <Button
+            onClick={() => history.push("/new-order")}
+            variant='secondary'
+            className='float-end'
+          >
+            Back to start
+          </Button>
+        </Col>
+        <Col xs={6} />
+        <Col />
       </Row>
     </Container>
   );

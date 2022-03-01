@@ -14,6 +14,7 @@ import { ContactForm } from "./orders/views/ContactForm";
 import { SelectProduct } from "./orders/views/SelectProduct";
 import { SelectProductDetails } from "./orders/views/SelectProductDetails";
 import { DeliveryForm } from "./orders/views/DeliveryForm";
+import { OrderReview } from "./orders/views/OrderReview";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -60,6 +61,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path='/product-order/:productId' exact={true}>
           <SelectProductDetails />
+        </ProtectedRoute>
+        <ProtectedRoute path='/order-review' exact={true}>
+          <OrderReview />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>

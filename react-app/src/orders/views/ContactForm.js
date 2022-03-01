@@ -112,7 +112,7 @@ export const ContactForm = () => {
       <Row className='mb-4'>
         <Col>
           <Button
-            onClick={() => history.push("new-order")}
+            onClick={() => history.push("/new-order")}
             variant='secondary'
             className='float-end'
           >
