@@ -1,6 +1,7 @@
 // constants
 const SET_CUSTOMER = "orders/SET_CUSTOMER";
 const SET_ORDER_DETAILS = "orders/SET_ORDER_DETAILS";
+const SET_ORDER_CART = "orders/SET_ORDER_CART";
 
 export const setCustomer = (customer) => ({
   type: SET_CUSTOMER,
@@ -10,6 +11,11 @@ export const setCustomer = (customer) => ({
 export const setOrderDetails = (orderDetails) => ({
   type: SET_ORDER_DETAILS,
   payload: orderDetails,
+});
+
+export const setOrderCart = (product) => ({
+  type: SET_ORDER_CART,
+  payload: product,
 });
 
 const initialState = {
@@ -28,6 +34,7 @@ const initialState = {
     quantity: "",
     poJobName: "",
   },
+  orderCart: [],
 };
 
 export default function reducer(state = initialState, action) {
@@ -36,6 +43,8 @@ export default function reducer(state = initialState, action) {
       return { ...state, customer: action.payload };
     case SET_ORDER_DETAILS:
       return { ...state, orderDetails: action.payload };
+    case SET_ORDER_CART:
+      return { ...state, orderCart: [...state.orderCart, action.payload] };
     default:
       return state;
   }

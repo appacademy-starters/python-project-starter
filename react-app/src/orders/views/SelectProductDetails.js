@@ -10,7 +10,7 @@ import { FormInputCard } from "../components/FormInputCard";
 import { useForm } from "../../hooks/useForm";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setOrderDetails } from "../../store/orders";
+import { setOrderCart, setOrderDetails } from "../../store/orders";
 
 export const SelectProductDetails = () => {
   const orderDetails = useSelector((state) => state.orders.orderDetails);
@@ -32,13 +32,18 @@ export const SelectProductDetails = () => {
       })
     );
     reset();
-    if (nextAction === "shipping_details")
+    if (nextAction === "shipping_details") {
       history.push("/product-order/delivey");
-    else if (nextAction === "add_more_products")
-      history.push("/select-product");
-    else {
-      alert("no further action");
+      return;
     }
+    dispatch(
+      setOrderCart({
+        ...formValues,
+        productModel,
+        product: currentProduct?.title,
+      })
+    );
+    history.push("/select-product");
   };
 
   const [currentProduct, setCurrentProduct] = useState(null);
