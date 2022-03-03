@@ -34,6 +34,13 @@ export const SelectProductDetails = () => {
     reset();
     if (nextAction === "shipping_details") {
       history.push("/product-order/delivey");
+      dispatch(
+        setOrderCart({
+          ...formValues,
+          productModel,
+          product: currentProduct?.title,
+        })
+      );
       return;
     }
     dispatch(
@@ -43,6 +50,7 @@ export const SelectProductDetails = () => {
         product: currentProduct?.title,
       })
     );
+    arrayProduct.forEach((product) => (product.styles = ""));
     history.push("/select-product");
   };
 

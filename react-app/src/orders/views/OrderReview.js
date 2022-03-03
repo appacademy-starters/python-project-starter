@@ -1,18 +1,28 @@
 import React from "react";
-import { Col, Container, ListGroup, Row, Button } from "react-bootstrap";
+import { Col, Container, ListGroup, Row, Button, Badge } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 
 export const OrderReview = () => {
   const customer = useSelector((state) => state.orders.customer);
-  const orderDetails = useSelector((state) => state.orders.orderDetails);
-  const { state: shippingDetails } = useLocation();
+  const orderCart = useSelector((state) => state.orders.orderCart);
+  // const { state: shippingDetails } = useLocation();
+  // const orderDetails = useSelector((state) => state.orders.orderDetails);
 
   const detailTitle = (key) => {
     const splitted = key.split(/(?=[A-Z])/);
     return splitted
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
+  };
+
+  const renderCustomerDetails = (key, value) => {
+    if (value === "" || value === undefined) return;
+    return (
+      <ListGroup.Item key={key}>{`${detailTitle(key)} : ${
+        value || "n/a"
+      }`}</ListGroup.Item>
+    );
   };
 
   return (
@@ -22,24 +32,28 @@ export const OrderReview = () => {
         <Col xs={6}>
           <h2>Customer Details</h2>
           <ListGroup>
-            {Object.entries(customer).map(([key, value]) => {
-              return (
-                <ListGroup.Item key={key}>{`${detailTitle(key)} : ${
-                  value || "n/a"
-                }`}</ListGroup.Item>
-              );
-            })}
+            {Object.entries(customer).map(([key, value]) =>
+              renderCustomerDetails(key, value)
+            )}
           </ListGroup>
           <Row className='mt-4 ' />
           <h2>Product Details</h2>
-          <ListGroup>
-            {Object.entries({ ...orderDetails, shipping: shippingDetails }).map(
-              ([key, value]) => (
-                <ListGroup.Item key={key}>{`${detailTitle(key)} : ${
-                  value || "n/a"
-                }`}</ListGroup.Item>
-              )
-            )}
+          <ListGroup as='ul'>
+            {orderCart.map((item) => (
+              <ListGroup.Item
+                key={item.id}
+                as='li'
+                className='d-flex justify-content-between align-items-start'
+              >
+                <div className='ms-2 me-auto'>
+                  <div className='fw-bold'>{item.product}</div>
+                  {item.productModel}
+                </div>
+                <Badge bg='dark' pill>
+                  {item.quantity}
+                </Badge>
+              </ListGroup.Item>
+            ))}
           </ListGroup>
         </Col>
         <Col />
