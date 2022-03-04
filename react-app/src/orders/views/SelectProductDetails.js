@@ -21,19 +21,35 @@ export const SelectProductDetails = () => {
 
   const [formValues, handleInputChange, reset] = useForm(orderDetails);
   const { notes, quantity, poJobName } = formValues;
+  const [validated, setValidated] = useState(false);
+  const [nextAction, setNextAction] = useState("shipping_details");
 
-  const handleSubmit = (event, nextAction) => {
-    event.preventDefault();
-    dispatch(
-      setOrderDetails({
-        ...formValues,
-        productModel,
-        product: currentProduct?.title,
-      })
-    );
-    reset();
-    if (nextAction === "shipping_details") {
-      history.push("/product-order/delivey");
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    } else {
+      event.preventDefault();
+      dispatch(
+        setOrderDetails({
+          ...formValues,
+          productModel,
+          product: currentProduct?.title,
+        })
+      );
+      reset();
+      if (nextAction === "shipping_details") {
+        history.push("/product-order/delivey");
+        dispatch(
+          setOrderCart({
+            ...formValues,
+            productModel,
+            product: currentProduct?.title,
+          })
+        );
+        return;
+      }
       dispatch(
         setOrderCart({
           ...formValues,
@@ -41,17 +57,10 @@ export const SelectProductDetails = () => {
           product: currentProduct?.title,
         })
       );
-      return;
+      arrayProduct.forEach((product) => (product.styles = ""));
+      history.push("/select-product");
     }
-    dispatch(
-      setOrderCart({
-        ...formValues,
-        productModel,
-        product: currentProduct?.title,
-      })
-    );
-    arrayProduct.forEach((product) => (product.styles = ""));
-    history.push("/select-product");
+    setValidated(true);
   };
 
   const [currentProduct, setCurrentProduct] = useState(null);
@@ -64,16 +73,24 @@ export const SelectProductDetails = () => {
   if (!currentProduct) return "Loading";
   return (
     <Container fluid>
-      <Row>
-        <Col />
-        <Col md={5}>
-          <Card className='mb-3'>
-            <Card.Header className='bg-secondary'>
-              {currentProduct.title}
-            </Card.Header>
-            <Form onSubmit={handleSubmit} className='p-4'>
+      <Form
+        noValidate
+        validated={validated}
+        onSubmit={handleSubmit}
+        className='p-4'
+      >
+        <Row>
+          <Col />
+          <Col md={5}>
+            <Card className='mb-3'>
+              <Card.Header className='bg-secondary'>
+                {currentProduct.title}
+              </Card.Header>
+
               <Form.Label>PO#/ Job Name</Form.Label>
               <Form.Control
+                required
+                minLength='2'
                 className='custom-input'
                 type='text'
                 placeholder='Your answer'
@@ -81,31 +98,35 @@ export const SelectProductDetails = () => {
                 name='poJobName'
                 onChange={handleInputChange}
               />
-            </Form>
-            <Row xs={2}>
-              {arrayProduct.map((product) => (
-                <Product
-                  key={product.title}
-                  {...product}
-                  styles={product.styles}
-                  handleClick={() => {
-                    setProductModel(product.title);
-                    arrayProduct.map((_product) =>
-                      _product.id === product.id
-                        ? (_product.styles = "text-white bg-dark")
-                        : (_product.styles = "")
-                    );
-                  }}
-                />
-              ))}
-            </Row>
-          </Card>
-        </Col>
-        <Col md={6}>
-          <FormTitleCard />
-          <Form onSubmit={handleSubmit}>
+              <Form.Control.Feedback type='invalid'>
+                Must be min Two Characters Long or more.
+              </Form.Control.Feedback>
+
+              <Row xs={2}>
+                {arrayProduct.map((product) => (
+                  <Product
+                    key={product.title}
+                    {...product}
+                    styles={product.styles}
+                    handleClick={() => {
+                      setProductModel(product.title);
+                      arrayProduct.map((_product) =>
+                        _product.id === product.id
+                          ? (_product.styles = "text-white bg-dark")
+                          : (_product.styles = "")
+                      );
+                    }}
+                  />
+                ))}
+              </Row>
+            </Card>
+          </Col>
+          <Col md={6}>
+            <FormTitleCard />
+
             <FormInputCard inputLabel='Quantity'>
               <Form.Control
+                required
                 className='custom-input'
                 type='number'
                 placeholder='Your quantity'
@@ -116,6 +137,7 @@ export const SelectProductDetails = () => {
             </FormInputCard>
             <FormInputCard inputLabel={currentProduct.notesLabel}>
               <Form.Control
+                required
                 as='textarea'
                 rows={3}
                 className='custom-input'
@@ -131,39 +153,32 @@ export const SelectProductDetails = () => {
                   type='submit'
                   variant='dark'
                   size='lg'
-                  onClick={(event) => handleSubmit(event, "add_more_products")}
+                  onClick={() => setNextAction("add_more_products")}
                 >
                   Yes, add more products
                 </Button>
-                <Button
-                  type='submit'
-                  variant='dark'
-                  size='lg'
-                  onClick={(event) => {
-                    handleSubmit(event, "shipping_details");
-                  }}
-                >
+                <Button type='submit' variant='dark' size='lg'>
                   No, i'm finished
                 </Button>
               </div>
             </FormInputCard>
-          </Form>
-        </Col>
-        <Col />
-      </Row>
-      <Row className='mb-4'>
-        <Col>
-          <Button
-            onClick={() => history.push("/new-order")}
-            variant='secondary'
-            className='float-end'
-          >
-            Back to start
-          </Button>
-        </Col>
-        <Col xs={6} />
-        <Col />
-      </Row>
+          </Col>
+          <Col />
+        </Row>
+        <Row className='mb-4'>
+          <Col>
+            <Button
+              onClick={() => history.push("/new-order")}
+              variant='secondary'
+              className='float-end'
+            >
+              Back to start
+            </Button>
+          </Col>
+          <Col xs={6} />
+          <Col />
+        </Row>
+      </Form>
     </Container>
   );
 };

@@ -17,23 +17,34 @@ export const ContactForm = () => {
   const customer = useSelector((state) => state.orders.customer);
   const dispatch = useDispatch();
   const [formValues, handleInputChange, reset] = useForm(customer);
+  const [validated, setValidated] = useState(false);
   const { fullName, company, email, phoneNumber, unit, zipCode } = formValues;
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    dispatch(setCustomer({ ...formValues, address }));
-    reset();
-    history.push("select-product");
+    const form = event.currentTarget;
+    console.log(form.checkValidity());
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    } else {
+      event.preventDefault();
+      dispatch(setCustomer({ ...formValues, address }));
+      reset();
+      history.push("select-product");
+    }
+    setValidated(true);
   };
   return (
     <Container fluid>
-      <Row>
-        <Col />
-        <Col xs={6}>
-          <ContactFormTitle title='Contact Details' bodyTxt={bodyTxt} />
-          <Form onSubmit={handleSubmit}>
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Row>
+          <Col />
+          <Col xs={6}>
+            <ContactFormTitle title='Contact Details' bodyTxt={bodyTxt} />
             <FormInputCard inputLabel='Full Name'>
               <Form.Control
+                required
+                minLength='2'
                 className='custom-input'
                 type='text'
                 placeholder='Your answer'
@@ -41,9 +52,14 @@ export const ContactForm = () => {
                 name='fullName'
                 onChange={handleInputChange}
               />
+              <Form.Control.Feedback type='invalid'>
+                Must be min Two Characters Long or more.
+              </Form.Control.Feedback>
             </FormInputCard>
             <FormInputCard inputLabel='Company'>
               <Form.Control
+                required
+                minLength='2'
                 className='custom-input'
                 type='text'
                 placeholder='Your answer'
@@ -51,11 +67,15 @@ export const ContactForm = () => {
                 name='company'
                 onChange={handleInputChange}
               />
+              <Form.Control.Feedback type='invalid'>
+                Must be min Two Characters Long or more.
+              </Form.Control.Feedback>
             </FormInputCard>
             <FormInputCard inputLabel='Contact E-mail (if different)'>
               <Form.Control
+                required
                 className='custom-input'
-                type='text'
+                type='email'
                 placeholder='Your answer'
                 value={email}
                 name='email'
@@ -64,6 +84,9 @@ export const ContactForm = () => {
             </FormInputCard>
             <FormInputCard inputLabel='Phone Number'>
               <Form.Control
+                required
+                minLength='2'
+                pattern='((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}'
                 className='custom-input'
                 type='text'
                 placeholder='Your answer'
@@ -71,6 +94,9 @@ export const ContactForm = () => {
                 name='phoneNumber'
                 onChange={handleInputChange}
               />
+              <Form.Control.Feedback type='invalid'>
+                Must be a valid phone number i.e 123-456-7890
+              </Form.Control.Feedback>
             </FormInputCard>
             <FormInputCard inputLabel='Address, City, State, Zip Code'>
               <GooglePlacesAutocomplete
@@ -87,6 +113,8 @@ export const ContactForm = () => {
             </FormInputCard>
             <FormInputCard inputLabel='Apartment, unit, suite, or floor #'>
               <Form.Control
+                required
+                minLength='2'
                 className='custom-input'
                 type='text'
                 placeholder='Your answer'
@@ -94,9 +122,14 @@ export const ContactForm = () => {
                 name='unit'
                 onChange={handleInputChange}
               />
+              <Form.Control.Feedback type='invalid'>
+                Must be min Two Characters Long or more.
+              </Form.Control.Feedback>
             </FormInputCard>
             <FormInputCard inputLabel='Zip Code'>
               <Form.Control
+                required
+                minLength='2'
                 className='custom-input'
                 type='text'
                 placeholder='Your answer'
@@ -105,27 +138,27 @@ export const ContactForm = () => {
                 onChange={handleInputChange}
               />
             </FormInputCard>
-          </Form>
-        </Col>
-        <Col />
-      </Row>
-      <Row className='mb-4'>
-        <Col>
-          <Button
-            onClick={() => history.push("/new-order")}
-            variant='secondary'
-            className='float-end'
-          >
-            Back to start
-          </Button>
-        </Col>
-        <Col xs={6} />
-        <Col>
-          <Button onClick={(event) => handleSubmit(event)} variant='secondary'>
-            Next: Choose Products
-          </Button>
-        </Col>
-      </Row>
+          </Col>
+          <Col />
+        </Row>
+        <Row className='mb-4'>
+          <Col>
+            <Button
+              onClick={() => history.push("/new-order")}
+              variant='secondary'
+              className='float-end'
+            >
+              Back to start
+            </Button>
+          </Col>
+          <Col xs={6} />
+          <Col>
+            <Button type='submit' variant='secondary'>
+              Next: Choose Products
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     </Container>
   );
 };
