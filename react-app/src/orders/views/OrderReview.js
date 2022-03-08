@@ -1,13 +1,12 @@
 import React from "react";
 import { Col, Container, ListGroup, Row, Button, Badge } from "react-bootstrap";
 import { useSelector } from "react-redux";
-// import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export const OrderReview = () => {
   const customer = useSelector((state) => state.orders.customer);
   const orderCart = useSelector((state) => state.orders.orderCart);
-  // const { state: shippingDetails } = useLocation();
-  // const orderDetails = useSelector((state) => state.orders.orderDetails);
+  const { state: shippingDetails } = useLocation();
 
   const detailTitle = (key) => {
     const splitted = key.split(/(?=[A-Z])/);
@@ -20,7 +19,7 @@ export const OrderReview = () => {
     if (value === "" || value === undefined) return;
     return (
       <ListGroup.Item key={key}>{`${detailTitle(key)} : ${
-        value || "n/a"
+        value?.label || value || "n/a"
       }`}</ListGroup.Item>
     );
   };
@@ -55,6 +54,17 @@ export const OrderReview = () => {
               </ListGroup.Item>
             ))}
           </ListGroup>
+          <Row className='mt-4 ' />
+          <h2>Shipping Details</h2>
+          <ListGroup.Item
+            as='li'
+            className='d-flex justify-content-between align-items-start'
+          >
+            <div className='ms-2 me-auto'>
+              <div className='fw-bold'>Shipping type</div>
+              {shippingDetails || "Free"}
+            </div>
+          </ListGroup.Item>
         </Col>
         <Col />
       </Row>
