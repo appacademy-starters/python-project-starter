@@ -1,0 +1,53 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  BuildAndDeploy:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+    # https://github.com/actions/setup-node
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+        cache: 'npm'
+        cache-dependency-path: react-app/package-lock.json
+    - name: Build React App
+      working-directory: react-app
+      run: npm install && npm run build
+
+    # https://github.com/actions/setup-python
+    # If a student sees this, they could speed up their builds 
+    # by moving install from docker to cached GH action runner
+    # Have fun (after you have a passing project!) :) 
+    - uses: actions/setup-python@v3
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+    - run: pip install pipenv
+
+    - name: Update requirments.txt for container install
+      run: pipenv lock -r > requirements.txt
+
+    - name: Login to Heroku Container registry
+      env: 
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:login 
+
+    - name: Build Container and push
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} web 
+
+    - name: Release
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web 
+
+    - name: Run DB Migration
+      env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku run -a ${{ secrets.HEROKU_APP_NAME }} flask run db upgrade
