@@ -13,6 +13,7 @@ import { OrderForm } from "./orders/views/OrderForm";
 import { ContactForm } from "./orders/views/ContactForm";
 import { SelectProduct } from "./orders/views/SelectProduct";
 import { SelectProductDetails } from "./orders/views/SelectProductDetails";
+import { UserHome } from "./orders/views/UserHome";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -57,6 +58,15 @@ function App() {
         <ProtectedRoute path='/product-order/:productId' exact={true}>
           <SelectProductDetails />
         </ProtectedRoute>
+        <Route exact path="/profile/user">
+						<UserHome />
+				</Route>
+        <Route exact path="/profile/user/:id">
+							<UserHome />
+				</Route>
+				<Route exact path="/profile/user/:id/:profileoption">
+							<UserHome />
+				</Route>
       </Switch>
     </BrowserRouter>
   );

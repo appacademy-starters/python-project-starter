@@ -1,15 +1,12 @@
 import React, { useState, useContext } from "react";
 
 import { useHistory } from "react-router";
-import { Context } from "../../store/appContext";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 
-export const SideBar = ({ user, userId, nonprofit, nonprofitId }) => {
+export const SideBar = ({ user, userId }) => {
 	const history = useHistory();
-	const { store, actions } = useContext(Context);
+	// const { store, actions } = useContext(Context);
 
 	const [dropdown, setDropdown] = useState(false);
 	const [active, setActive] = useState(false);
@@ -30,8 +27,7 @@ export const SideBar = ({ user, userId, nonprofit, nonprofitId }) => {
 			<a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 				<svg className="bi me-2" width="40" height="32" />
 				<span className="fs-4">
-                    USERNAME
-					{/* {user ? `${user.name} ${user.last_name}` : nonprofit ? nonprofit.name : ""} */}
+                    admin
 				</span>
 			</a>
 			<hr />
@@ -42,12 +38,10 @@ export const SideBar = ({ user, userId, nonprofit, nonprofitId }) => {
 						className={active ? "nav-link text-white " + activeOption : "nav-link text-white"}
 						aria-current="page"
 						onClick={() => {
-							// user
-							// 	? history.push(`/profile/user/${userId}`)
-							// 	: history.push(`/profile/nonprofit/${nonprofitId}`);
+							history.push(`/profile/user/${userId}`);
 						}}>
 						<i className="fas fa-home" />
-						<span className="ms-4 sidebar-item ">Dashboard</span>
+						<span className="ms-4 sidebar-item ">orders</span>
 					</a>
 				</li>
 				<li className="m-2">
@@ -55,40 +49,34 @@ export const SideBar = ({ user, userId, nonprofit, nonprofitId }) => {
 						style={{ cursor: "pointer" }}
 						className={active ? "nav-link text-white " + activeOption : "nav-link text-white"}
 						onClick={() => {
-							// user
-							// 	? history.push(`/profile/user/${userId}/donations`)
-							// 	: history.push(`/profile/nonprofit/${nonprofitId}/donations`);
+							history.push(`/profile/user/${userId}/customers`);
 						}}>
 						<i className="fas fa-donate" />
-						<span className="ms-4 sidebar-item">Donations</span>
+						<span className="ms-4 sidebar-item">customers</span>
 					</a>
 				</li>
-				{user ? (
+	
 					<li className="m-2">
 						<a
 							style={{ cursor: "pointer" }}
 							className="nav-link text-white"
 							onClick={() => {
-								// history.push(`/profile/user/${userId}/my-orders`);
+								history.push(`/profile/user/${userId}/products`);
 							}}>
 							<i className="fas fa-tags" />
-							<span className="ms-4 sidebar-item">Orders</span>
+							<span className="ms-4 sidebar-item">products</span>
 						</a>
 					</li>
-				) : (
-					""
-				)}
+			
 				<li className="m-2">
 					<a
 						style={{ cursor: "pointer" }}
 						className="nav-link text-white"
 						onClick={() => {
-							// user
-							// 	? history.push(`/profile/user/${userId}/myaccount`)
-							// 	: history.push(`/profile/nonprofit/${nonprofitId}/myaccount`);
+							history.push(`/profile/user/${userId}/myaccount`);
 						}}>
 						<i className="fas fa-cog" />
-						<span className="ms-4 sidebar-item">My Account</span>
+						<span className="ms-4 sidebar-item">my account</span>
 					</a>
 				</li>
 				<li className="m-2">
@@ -96,11 +84,11 @@ export const SideBar = ({ user, userId, nonprofit, nonprofitId }) => {
 						style={{ cursor: "pointer" }}
 						className="nav-link text-white"
 						onClick={() => {
-							// history.push("/");
+							history.push("/");
 							// actions.logout();
 						}}>
 						<i className="fas fa-sign-out-alt" />
-						<span className="ms-4 sidebar-item">Log Out</span>
+						<span className="ms-4 sidebar-item">log out</span>
 					</a>
 				</li>
 			</ul>
@@ -111,6 +99,4 @@ export const SideBar = ({ user, userId, nonprofit, nonprofitId }) => {
 SideBar.propTypes = {
 	user: PropTypes.object,
 	userId: PropTypes.string,
-	nonprofit: PropTypes.object,
-	nonprofitId: PropTypes.string
 };

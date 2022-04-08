@@ -1,35 +1,38 @@
 import React, { useContext } from "react";
-import { Context } from "../../store/appContext";
+// import { Context } from "react";
 
 import { useHistory } from "react-router";
 import { useParams } from "react-router";
 import PropTypes from "prop-types";
 import { SideBar } from "../components/Sidebar";
+import { DashboardOrders } from "./dashboards/DashboardOrders";
+import { DashboardProducts } from "./dashboards/DashboardProducts";
+import { DashboardCustomers } from "./dashboards/DashboardCustomers";
+import { DashboardMyAccount } from "./dashboards/DashboardMyAccount";
 
 // import { BarGraph } from "../../component/BarGraph";
 
-export const UserProfile = props => {
+export const UserHome = props => {
 	const params = useParams();
 	const history = useHistory();
 
-	const { store, actions } = useContext(Context);
+	// const { store, actions } = useContext(Context);
 
 	let { id } = useParams();
 
-	// setting logged in nonprofit in order to
-	// use its info in the dashboard
+
 	let activeUser;
 
 
 	const clickedProfile = profile => {
-		if (profile == "home") {
-			// return <UserProfileDonations />;
-		} else if (profile == "myaccount") {
-			// return <UserProfileMyAccount />;
-		} else if (profile == "my-orders") {
-			// return <UserNonProfitFriends />;
+		if (profile == "DashboardMyAccount") {
+			return <DashboardMyAccount />;
+		} else if (profile == "customers") {
+			return <DashboardCustomers />;
+		} else if (profile == "products") {
+			return <DashboardProducts />;
 		} else {
-			// return <UserProfileHome />;
+			return <DashboardOrders />;
 		}
 	};
 
@@ -42,6 +45,6 @@ export const UserProfile = props => {
 	);
 };
 
-UserProfile.propTypes = {
+UserHome.propTypes = {
 	match: PropTypes.object
 };
