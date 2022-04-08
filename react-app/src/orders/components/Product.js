@@ -10,7 +10,7 @@ export const Product = ({ src, alt, title, description, handleClick }) => {
         <Card.Body className='m-4 rounded border border-dark'>
           <Card.Title>{title}</Card.Title>
           <Card.Text>{description}</Card.Text>
-          <img src={src} className='rounded mx-auto d-block img-fluid' alt={alt} />
+          <Image src={src} className='rounded mx-auto d-block img-fluid' alt={alt} />
         </Card.Body>
         <Button className='m-2' variant='dark' onClick={handleClick}>
           Select
