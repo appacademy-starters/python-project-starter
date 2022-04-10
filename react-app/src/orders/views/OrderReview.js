@@ -2,11 +2,40 @@ import React from "react";
 import { Col, Container, ListGroup, Row, Button, Badge } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { createCustomerDto } from "../../adapters/customerAdapter";
 
 export const OrderReview = () => {
   const customer = useSelector((state) => state.orders.customer);
   const orderCart = useSelector((state) => state.orders.orderCart);
   const { state: shippingDetails } = useLocation();
+
+  // TODO:
+  const placeOrder = () => {};
+  const addOrderToDb = () => {};
+  const addOrderItemsToDb = () => {};
+
+  const addCustomerToDb = async (customer) => {
+    const dto = createCustomerDto(customer);
+    const response = await fetch("http://localhost:3333/customers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dto),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else if (response.status < 500) {
+      const data = await response.json();
+      if (data.errors) {
+        return data.errors;
+      }
+    } else {
+      return ["An error occurred. Please try again."];
+    }
+  };
 
   const detailTitle = (key) => {
     const splitted = key.split(/(?=[A-Z])/);
@@ -71,11 +100,9 @@ export const OrderReview = () => {
       <Row className='mt-4'>
         <Col className='text-center'>
           <Button
-            onClick={() =>
-              alert(
-                "Thank you for your order! You will be recieving an invoice and order status shortly"
-              )
-            }
+            onClick={() => {
+              addCustomerToDb(customer);
+            }}
             variant='secondary'
           >
             Submit Order
