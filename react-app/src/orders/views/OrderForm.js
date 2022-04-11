@@ -5,37 +5,35 @@ import { Col, Container, Form, Row, Button } from "react-bootstrap";
 import { useForm } from "../../hooks/useForm";
 import { FormInputCard } from "../components/FormInputCard";
 import { FormTitleCard } from "../components/FormTitleCard";
-import { useDispatch } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
 import { setCustomer } from "../../store/orders";
-
-const initialForm = {
-  company: "",
-  email: "",
-};
-
-const newClientAction = (formValues, action) => {
-  action();
-};
-const recurrentClientAction = (formValues, action) => {
-  action();
-};
 
 export const OrderForm = () => {
   const dispatch = useDispatch();
+  const customer = useSelector((state) => state.orders.customer);
   const history = useHistory();
-  const [formValues, handleInputChange, reset] = useForm(initialForm);
+  const [formValues, handleInputChange, reset] = useForm(customer);
   const { company, email } = formValues;
   const [clientType, setClientType] = useState("recurrent-client");
+  const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    if (clientType === "new-client") {
-      newClientAction(formValues, () => history.push("new-client"));
-      return;
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    } else {
+      event.preventDefault();
+      if (clientType === "new-client") {
+        history.push("new-client");
+        return;
+      }
+      history.push("select-product");
+      dispatch(setCustomer(formValues));
+      reset();
     }
-    recurrentClientAction(formValues, () => history.push("select-product"));
-    dispatch(setCustomer(formValues));
-    reset();
+    setValidated(true);
   };
   return (
     <Container fluid>
@@ -43,9 +41,10 @@ export const OrderForm = () => {
         <Col />
         <Col xs={6}>
           <FormTitleCard />
-          <Form onSubmit={handleSubmit}>
+          <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <FormInputCard inputLabel='Email'>
               <Form.Control
+                required
                 className='custom-input'
                 type='email'
                 placeholder='Enter email'
@@ -56,6 +55,8 @@ export const OrderForm = () => {
             </FormInputCard>
             <FormInputCard inputLabel='Company'>
               <Form.Control
+                required
+                minLength='2'
                 className='custom-input'
                 type='text'
                 placeholder='Your Answer'
@@ -63,6 +64,9 @@ export const OrderForm = () => {
                 name='company'
                 onChange={handleInputChange}
               />
+              <Form.Control.Feedback type='invalid'>
+                Must be min Two Characters Long or more.
+              </Form.Control.Feedback>
             </FormInputCard>
             <FormInputCard inputLabel='Is this your first order on our new platform?'>
               <div className='d-flex d-flex justify-content-evenly'>
