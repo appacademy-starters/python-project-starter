@@ -10,7 +10,6 @@ import { DashboardProducts } from "./dashboards/DashboardProducts";
 import { DashboardCustomers } from "./dashboards/DashboardCustomers";
 import { DashboardMyAccount } from "./dashboards/DashboardMyAccount";
 
-// import { BarGraph } from "../../component/BarGraph";
 
 export const UserHome = props => {
 	const params = useParams();
@@ -39,7 +38,6 @@ export const UserHome = props => {
 	return (
 		<div className="d-flex">
             <SideBar />
-			{/* <SideBar user={activeUser} userId={id} /> */}
 			{clickedProfile(params.profileoption)}
 		</div>
 	);
