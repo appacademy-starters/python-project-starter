@@ -13,8 +13,12 @@ import { OrderForm } from "./orders/views/OrderForm";
 import { ContactForm } from "./orders/views/ContactForm";
 import { SelectProduct } from "./orders/views/SelectProduct";
 import { SelectProductDetails } from "./orders/views/SelectProductDetails";
+
+import { UserHome } from "./orders/views/UserHome";
+
 import { DeliveryForm } from "./orders/views/DeliveryForm";
 import { OrderReview } from "./orders/views/OrderReview";
+
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -32,6 +36,8 @@ function App() {
   }
 
   return (
+
+    
     <div className='mt-5'>
       <BrowserRouter>
         {/* <NavBar /> */}
@@ -69,9 +75,20 @@ function App() {
           <ProtectedRoute path='/order-review' exact={true}>
             <OrderReview />
           </ProtectedRoute>
+<Route exact path="/profile/user">
+						<UserHome />
+				</Route>
+        <Route exact path="/profile/user/:id">
+							<UserHome />
+				</Route>
+				<Route exact path="/profile/user/:id/:profileoption">
+							<UserHome />
+				</Route>
+           
         </Switch>
       </BrowserRouter>
     </div>
+
   );
 }
 

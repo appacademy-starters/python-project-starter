@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Button, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
+import Image from 'react-bootstrap/Image'
 
 export const Product = ({
   src,
@@ -16,7 +17,7 @@ export const Product = ({
         <Card.Body className={`m-4 rounded border border-dark  ${styles}`}>
           <Card.Title>{title}</Card.Title>
           <Card.Text>{description}</Card.Text>
-          <img src={src} className='rounded mx-auto d-block' alt={alt} />
+          <Image src={src} className='rounded mx-auto d-block img-fluid' alt={alt} />
         </Card.Body>
         <Button className='m-2' variant='dark' onClick={handleClick}>
           Select
