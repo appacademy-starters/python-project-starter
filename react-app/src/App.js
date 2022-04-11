@@ -40,14 +40,14 @@ function App() {
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
+        <Route path='/new-order' exact={true}>
+          <OrderForm />
+        </Route>
         <ProtectedRoute path='/users' exact={true}>
           <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true}>
           <User />
-        </ProtectedRoute>
-        <ProtectedRoute path='/new-order' exact={true}>
-          <OrderForm />
         </ProtectedRoute>
         <ProtectedRoute path='/new-client' exact={true}>
           <ContactForm />

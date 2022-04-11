@@ -9,7 +9,15 @@ const NavBar = () => {
   return (
     <Navbar expand="md" variant="light" bg="light">
       <Container>
-        <Navbar.Brand href="/"><strong>step</strong>solution</Navbar.Brand>
+        <Navbar.Brand href="/">
+        <img
+          alt=""
+          src="/./../logo-dark.png"
+          width="30"
+          height="30"
+          className="d-inline-block align-top"
+        />{' '}
+        <strong>step</strong>solution</Navbar.Brand>
         {/* <li>
           <NavLink to='/' exact={true} activeClassName='active'>
             Home

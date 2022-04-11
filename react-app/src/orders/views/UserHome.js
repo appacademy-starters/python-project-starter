@@ -9,6 +9,7 @@ import { DashboardOrders } from "./dashboards/DashboardOrders";
 import { DashboardProducts } from "./dashboards/DashboardProducts";
 import { DashboardCustomers } from "./dashboards/DashboardCustomers";
 import { DashboardMyAccount } from "./dashboards/DashboardMyAccount";
+import { DashboardOrderDetails } from "./dashboards/DashboardOrderDetails";
 
 
 export const UserHome = props => {
@@ -30,6 +31,8 @@ export const UserHome = props => {
 			return <DashboardCustomers />;
 		} else if (profile == "products") {
 			return <DashboardProducts />;
+		} else if (profile == "orderdetails") {
+			return <DashboardOrderDetails />;
 		} else {
 			return <DashboardOrders />;
 		}

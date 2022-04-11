@@ -17,8 +17,8 @@ export const DashboardProducts = () => {
 
 	return (
 		<>
-			<div className="d-flex p-4">
-				<div className="h-100 p-2 rounded-3">
+			<div className="w-100 d-flex p-4">
+				<div className="w-100 h-100 p-2 rounded-3">
 					<div className="dashboard-page">
 						{/* title section */}
 						<div className="title-area container-fluid p-2">
