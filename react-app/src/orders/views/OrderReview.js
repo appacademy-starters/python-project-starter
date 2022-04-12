@@ -86,6 +86,7 @@ export const OrderReview = () => {
           <Row className='mt-4 ' />
           <h2>Shipping Details</h2>
           <ListGroup.Item
+            key={"shipping-detail"}
             as='li'
             className='d-flex justify-content-between align-items-start'
           >
