@@ -19,7 +19,6 @@ import { UserHome } from "./orders/views/UserHome";
 import { DeliveryForm } from "./orders/views/DeliveryForm";
 import { OrderReview } from "./orders/views/OrderReview";
 
-
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
@@ -36,8 +35,6 @@ function App() {
   }
 
   return (
-
-    
     <div className='mt-5'>
       <BrowserRouter>
         {/* <NavBar /> */}
@@ -75,20 +72,18 @@ function App() {
           <ProtectedRoute path='/order-review' exact={true}>
             <OrderReview />
           </ProtectedRoute>
-<Route exact path="/profile/user">
-						<UserHome />
-				</Route>
-        <Route exact path="/profile/user/:id">
-							<UserHome />
-				</Route>
-				<Route exact path="/profile/user/:id/:profileoption">
-							<UserHome />
-				</Route>
-           
+          <Route exact path='/profile/user'>
+            <UserHome />
+          </Route>
+          <Route exact path='/profile/user/:id'>
+            <UserHome />
+          </Route>
+          <Route exact path='/profile/user/:id/:profileoption'>
+            <UserHome />
+          </Route>
         </Switch>
       </BrowserRouter>
     </div>
-
   );
 }
 
