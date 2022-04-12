@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import { login } from "../../store/session";
 
 const LoginForm = () => {
@@ -31,34 +32,44 @@ const LoginForm = () => {
   }
 
   return (
-    <form onSubmit={onLogin}>
-      <div>
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
-        ))}
-      </div>
-      <div>
-        <label htmlFor='email'>Email</label>
-        <input
-          name='email'
-          type='text'
-          placeholder='Email'
-          value={email}
-          onChange={updateEmail}
-        />
-      </div>
-      <div>
-        <label htmlFor='password'>Password</label>
-        <input
-          name='password'
-          type='password'
-          placeholder='Password'
-          value={password}
-          onChange={updatePassword}
-        />
-        <button type='submit'>Login</button>
-      </div>
-    </form>
+    <div className="mt-5 d-flex justify-content-center align-items-center">
+      <Form onSubmit={onLogin} className="rounded p-4 p-sm-3">
+        <div>
+          {errors.map((error, ind) => (
+            <div key={ind}>{error}</div>
+          ))}
+        </div>
+        <Form.Group className="mb-3" controlID="formEmail">
+          <Form.Label >
+            Email:
+          </Form.Label>
+          <Form.Control  
+              name='email'
+              type='email'
+              placeholder='Email'
+              value={email}
+              onChange={updateEmail}
+            />
+        </Form.Group>
+        <Form.Group className="mb-3" controlID="formPassword">
+          <Form.Label >
+            Password: 
+          </Form.Label >
+          <Form.Control  
+              name='password'
+              type='password'
+              placeholder='Password'
+              value={password}
+              onChange={updatePassword}
+            />
+          </Form.Group>
+          <NavLink to="/profile/user/">
+            <Button variant="dark" type='submit' >
+              login
+            </Button>
+          </NavLink>
+      </Form>
+    </div>
   );
 };
 
