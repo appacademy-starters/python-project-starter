@@ -3,26 +3,82 @@ import { Col, Container, ListGroup, Row, Button, Badge } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { createCustomerDto } from "../../adapters/customerAdapter";
+import { createOrderDto } from "../../adapters/orderAdapter";
+import { createOrderItemDto } from "../../adapters/orderItemsAdapter";
 
 export const OrderReview = () => {
   const customer = useSelector((state) => state.orders.customer);
   const orderCart = useSelector((state) => state.orders.orderCart);
+  const orderDetails = useSelector((state) => state.orders.orderDetails);
   const { state: shippingDetails } = useLocation();
 
   // TODO:
-  const placeOrder = () => {};
-  const addOrderToDb = () => {};
-  const addOrderItemsToDb = () => {};
+
+  const addOrderItemsToDb = async (orderCart) => {
+    const dto = createOrderItemDto(orderCart);
+    dto.forEach(async (orderItem) => {
+      const response = await fetch(
+        "https://stepsolution-api.herokuapp.com/order-items",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(orderItem),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.errors) {
+          return data.errors;
+        }
+      } else {
+        return ["An error occurred. Please try again."];
+      }
+    });
+  };
+  const addOrderToDb = async (orderDetails) => {
+    const dto = createOrderDto(orderDetails);
+    const response = await fetch(
+      "https://stepsolution-api.herokuapp.com/orders",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dto),
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else if (response.status < 500) {
+      const data = await response.json();
+      if (data.errors) {
+        return data.errors;
+      }
+    } else {
+      return ["An error occurred. Please try again."];
+    }
+  };
 
   const addCustomerToDb = async (customer) => {
     const dto = createCustomerDto(customer);
-    const response = await fetch("http://localhost:3333/customers", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dto),
-    });
+    const response = await fetch(
+      "https://stepsolution-api.herokuapp.com/customers",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dto),
+      }
+    );
 
     if (response.ok) {
       const data = await response.json();
@@ -51,6 +107,12 @@ export const OrderReview = () => {
         value?.label || value || "n/a"
       }`}</ListGroup.Item>
     );
+  };
+
+  const startPlacingOrder = () => {
+    // addCustomerToDb(customer);
+    // addOrderToDb(orderDetails);
+    addOrderItemsToDb(orderCart);
   };
 
   return (
@@ -102,7 +164,7 @@ export const OrderReview = () => {
         <Col className='text-center'>
           <Button
             onClick={() => {
-              addCustomerToDb(customer);
+              startPlacingOrder();
             }}
             variant='secondary'
           >
