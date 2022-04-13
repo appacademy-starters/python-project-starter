@@ -42,8 +42,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000",
-  "devDependencies": {
-    "tailwindcss": "^3.0.23"
-  }
+  "proxy": "http://localhost:5000"
 }
