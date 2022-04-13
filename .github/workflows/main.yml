@@ -17,7 +17,8 @@ jobs:
         cache-dependency-path: react-app/package-lock.json
     - name: Build React App
       working-directory: react-app
-      run: npm install && npm run build
+      # CI=false allows the build to ignore any warnings when building
+      run: npm install && CI=false npm run build
 
     # https://github.com/actions/setup-python
     # If a student sees this, they could speed up their builds 
@@ -50,4 +51,4 @@ jobs:
     - name: Run DB Migration
       env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku run -a ${{ secrets.HEROKU_APP_NAME }} flask run db upgrade
+      run: heroku run -a ${{ secrets.HEROKU_APP_NAME }} flask db upgrade
