@@ -88,7 +88,8 @@ each of the following variables:
 
 
 ### Dev Containers (OPTIONAL for M1 Users)
-The following instructions detail an *optional* development setup for M1 Mac users, especially those having issues with the `psycopg` package.
+The following instructions detail an *optional* development setup for M1 Mac users, especially those having issues with the `psycopg` package.  While we are not using `psycopg` in development anymore, the instructions for setting up a Dev Container are still provided if you want to use them.
+
 
 1. Make sure you have the [Microsoft Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension installed. 
 2. Make sure you have [Docker](https://www.docker.com/products/docker-desktop/) installed on your computer. 
