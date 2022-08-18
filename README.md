@@ -103,7 +103,7 @@ The following instructions detail an *optional* development setup for M1 Mac use
 
    **Note:** This will take much less time on future starts because everything will be cached.
 
-7. Once everything is up, be sure to make a `.env` file based on `.env.example` in both the root directory and the *react-app* directory before running your app. You do not need a `DATABASE_URL` in the `.env` file if you are using this Docker setup for development - the URL is already set in the image (see `.devcontainer/Dockerfile` for the URL).  ***You will need to make changes in the `.devcontainer/Dockerfile` if you want to use it with Sqlite3 instead of Postgres, the required changes are listed in the comments in that file***  
+7. Once everything is up, be sure to make a `.env` file based on `.env.example` in both the root directory and the *react-app* directory before running your app. You do not need a `DATABASE_URL` in the `.env` file if you are using this Docker setup for development - the URL is already set in the image (see `.devcontainer/Dockerfile` for the URL).  ***You will need to make changes in the `.devcontainer/Dockerfile` if you want to use it with SQLite3 instead of Postgres, the required changes are listed in the comments in that file***  
 
 8. Get into your pipenv, migrate your database, seed your database, and run your flask app
 
