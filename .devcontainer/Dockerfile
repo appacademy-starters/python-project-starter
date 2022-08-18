@@ -8,7 +8,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/python:0-${VARIANT}
 ARG NODE_VERSION="none"
 RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
-# Install Postgres
+# Install Postgres - remove/comment out lines 12-18 if you are using sqlite
 RUN sudo apt update
 RUN sudo apt install postgresql -y && \
 sudo service postgresql start && \
@@ -17,5 +17,6 @@ sudo -u postgres psql -c "ALTER USER vscode WITH SUPERUSER;" && \
 sudo -u postgres psql -c "CREATE DATABASE vscode WITH OWNER vscode" && \
 sudo -u postgres psql -c "CREATE DATABASE python_project WITH OWNER vscode"
 
-# auto configure flask app to connect to internal postgres
+# auto configure flask app to connect to internal postgres.  this will need to
+# be updated to connect to your sqlite3 database file instead of postgres
 ENV DATABASE_URL=postgresql://vscode:password@localhost/python_project
