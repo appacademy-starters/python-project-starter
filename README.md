@@ -17,7 +17,7 @@ This is the starter for the Flask React project.
 
 3. Create a **.env** file based on the example with proper settings for your
    development environment
-4. Setup your Sqlite3 database and make sure it matches your **.env** file
+4. Make sure the SQLite3 database connection URL is in the **.env** file
 
 5. Get into your pipenv, migrate your database, seed your database, and run your flask app
 
