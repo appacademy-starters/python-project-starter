@@ -88,7 +88,9 @@ each of the following variables:
 <br>
 
 ## Dev Containers (OPTIONAL for M1 Users)
-The following instructions detail an *optional* development setup for M1 Mac users, especially those having issues with the `psycopg` package.  ***While we are not using `psycopg` in development anymore, the instructions for setting up a Dev Container are still provided if you want to use them.***
+**These instructions should only be followed if you are using `psycopg` or PostgresQL in development. If you are are using SQLite3 for development, these instructions will not apply to you.**
+
+The following instructions detail an *optional* development setup for M1 Mac users, especially those having issues with the `psycopg` package and PostgresQL in their development environment.
 
 
 1. Make sure you have the [Microsoft Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension installed. 
